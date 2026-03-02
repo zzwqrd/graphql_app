@@ -1,0 +1,48 @@
+import 'package:get_it/get_it.dart';
+
+import '../core/services/dio_services.dart';
+import '../features/auth/login/presentation/manager/controller.dart';
+import '../features/cart/presentation/controller/controller.dart';
+import '../features/category/presentation/controller/controller.dart';
+import '../features/change_language/presentation/controller/controller.dart';
+import '../features/home/presentation/controller/controller.dart';
+import '../features/layout/presentation/controller/controller.dart';
+import '../features/my_account/presentation/controller/controller.dart';
+import '../features/order_history/presentation/controller/controller.dart';
+import '../features/product_details/presentation/controller/controller.dart';
+import '../features/product_list/presentation/controller/controller.dart';
+import '../features/profile_address/presentation/controller/address_cubit.dart';
+import '../features/splash/presentation/controller/controller.dart';
+import '../features/wishlist/presentation/controller/controller.dart';
+
+final GetIt sl = GetIt.instance;
+
+class ServicesLocator {
+  void initGitIt() {
+    // Core Services
+    sl.registerLazySingleton<DioServices>(() => DioServices());
+
+    // Features Controllers
+    sl.registerFactory<SplashCubit>(() => SplashCubit());
+    sl.registerFactory<LanguageCubit>(
+      () => LanguageCubit()..changeLanguage('ar'),
+    );
+    sl.registerLazySingleton<LayoutCubit>(() => LayoutCubit());
+    sl.registerFactory<LoginCubit>(() => LoginCubit());
+    sl.registerLazySingleton<CategoryCubit>(() => CategoryCubit());
+
+    // sl.registerFactory<ProductCubit>(() => ProductCubit()); // Class not found in codebase
+
+    sl.registerLazySingleton<WishlistCubit>(() => WishlistCubit());
+    sl.registerFactory<ProductListCubit>(() => ProductListCubit());
+    sl.registerFactory<ProductDetailsCubit>(() => ProductDetailsCubit());
+    sl.registerFactory<MyAccountController>(() => MyAccountController());
+    sl.registerFactory<OrderHistoryController>(() => OrderHistoryController());
+    sl.registerLazySingleton<HomeCubit>(() => HomeCubit());
+
+    sl.registerLazySingleton<CartCubit>(() => CartCubit());
+
+    // Address Management
+    sl.registerFactory<AddressCubit>(() => AddressCubit());
+  }
+}

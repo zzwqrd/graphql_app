@@ -1,0 +1,201 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 أوامر البناء والتوليد للمشروع (Build & Generate Commands)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# 🌐 توليد مفاتيح الترجمة (Localization Keys)
+# هذا الأمر يقوم بتوليد ملف مفاتيح الترجمة تلقائياً من ملفات اللغات.
+flutter pub run easy_localization:generate -S assets/lang -f keys -O lib/gen -o locale_keys.g.dart
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 📦 توليد مكونات التطبيق (App Components)
+# هذا الأمر يقوم بتوليد مكونات التطبيق تلقائياً من مج    
+flutter pub run build_runner build --delete-conflicting-outputs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# 🚀 تنظيف ملفات التوليد (Clean Generated Files)
+# هذا الأمر يقوم بحذف الملفات التي تم توليدها تلقائياً.
+flutter pub run build_runner clean
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 📚 ملاحظات إضافية (Additional Notes)
+# - تأكد من تحديث ملفات الأصول واللغات قبل تشغيل أوامر التوليد.
+# - استخدم الأمر "clean" قبل إعادة التوليد لتجنب التعارضات.
+# - يمكن دمج أوامر التوليد في سكريبتات البناء الخاصة بك لأ  تمت العملية بشكل أوتوماتيكي.
+# - راجع الوثائق الرسمية للأدوات المستخدمة لمزيد من الخيارات والتخصيص.
+```ini
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📚 ملف أوامر Flutter / Dart مفصّل مع تعليقات بالعربية
+شرح مُجمّع لأوامر شائعة الاستخدام أثناء التطوير، البناء، الاختبار، والتوزيع
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ---------------------------
+# 1) إعداد المشروع وادارة الحزم
+# ---------------------------
+# جلب الحزم (اجعلها أول خطوة بعد تعديل pubspec.yaml)
+flutter pub get
+
+# تحديث الحزم (يحاول تحديث الإصدارات حسب constraints)
+flutter pub upgrade
+
+# التحقق من التوافق والأدوات المثبتة
+flutter doctor -v
+
+# إنشاء مشروع جديد (في مجلد جديد)
+flutter create my_app
+
+# تشغيل الأمر داخل مشروع قائم لإضافة ملفات البناء الافتراضية
+flutter create .
+
+# ---------------------------
+# 2) تحليل وتهيئة الكود (Static analysis & formatting)
+# ---------------------------
+# تحليل الشيفرة للعثور على أخطاء/تحذيرات
+flutter analyze
+
+# بديل: استخدام dart analyzer مباشرة
+dart analyze
+
+# تنسيق الشيفرة (format)
+dart format .
+
+# فحص الصياغة (lint) إن كنت تستخدم حزم lints
+flutter analyze --no-fatal-infos
+
+# ---------------------------
+# 3) بناء وتشغيل التطبيق أثناء التطوير
+# ---------------------------
+# تشغيل على جهاز موصول أو محاكي (اختَر ID الجهاز بواسطة `flutter devices`)
+flutter run -d <deviceId>
+
+# تشغيل في وضع الريليز (release) للاختبار بالأداء الحقيقية
+flutter run --release -d <deviceId>
+
+# تشغيل تطبيق ويب في المتصفح الافتراضي
+flutter run -d chrome
+
+# تشغيل مع تفصيلات السجل verbose
+flutter run -v
+
+# ---------------------------
+# 4) أوامر البناء النهائية (release builds)
+# ---------------------------
+# Android: APK للنشر السريع
+flutter build apk --release
+
+# Android: App Bundle (موصى به للنشر على Google Play)
+flutter build appbundle --release
+
+# iOS: بناء مشروع iOS (يتطلب Xcode/macOS)
+flutter build ios --release
+
+# iOS: توليد ملف IPA (احتاج ملف ExportOptions.plist عادةً)
+flutter build ipa --export-options-plist=path/to/ExportOptions.plist
+
+# Web: بناء إصدار جاهز للنشر
+flutter build web --release
+
+# macOS / Windows / Linux: بناء إصدار سطح المكتب
+flutter build macos --release
+flutter build windows --release
+flutter build linux --release
+
+# Android AAR (لإعادة استخدام كـ Android library)
+flutter build aar
+
+# Flutter assets bundle فقط
+flutter build bundle
+
+# ---------------------------
+# 5) التوقيع والـ Gradle (Android-specific)
+# ---------------------------
+# بناء Release via Gradle (من داخل android/)
+cd android && ./gradlew assembleRelease
+
+# تنظيف تجميعات Gradle
+cd android && ./gradlew clean
+
+# توليد APK موقّع (إذا ضبطت signingConfigs في build.gradle)
+cd android && ./gradlew bundleRelease
+
+# ---------------------------
+# 6) التوليد البرمجي (Code generation)
+# ---------------------------
+# build_runner: توليد الكود (مثال: freezed, json_serializable, mobx, injectable ...)
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# تشغيل في وضع المراقبة (مناسب أثناء التطوير)
+flutter pub run build_runner watch --delete-conflicting-outputs
+
+# تنظيف الملفات المولدة
+flutter pub run build_runner clean
+
+# أدوات توليد شائعة أخرى (أمثلة)
+# easy_localization: توليد مفاتيح الترجمات
+flutter pub run easy_localization:generate -S assets/lang -f keys -O lib/gen -o locale_keys.g.dart
+
+# flutter_gen (إذا مُعدّ في pubspec.yaml)
+flutter pub run build_runner build
+
+# flutter_launcher_icons (توليد أيقونات التطبيق)
+flutter pub run flutter_launcher_icons:main
+
+# ---------------------------
+# 7) اختبارات (Tests)
+# ---------------------------
+# اختبارات الوحدة (unit/widget)
+flutter test
+
+# اختبار تكامل (integration/driver) — قد تتطلب إعداد test_driver
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
+
+# مثال للأداة الجديدة للتكامل
+flutter test integration_test
+
+# ---------------------------
+# 8) CI / Release helpers
+# ---------------------------
+# تشغيل analyze و tests في CI
+flutter analyze && flutter test --coverage
+
+# توليد تقارير coverage (باستخدام lcov)
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+
+# إنشاء إصدار تلقائي عبر Fastlane (مثال iOS/Android)
+# (يتطلب إعداد fastlane داخل android/ios)
+fastlane android beta
+fastlane ios beta
+
+# ---------------------------
+# 9) أدوات مساعدة وإدارة الاعتمادات
+# ---------------------------
+# تحديث الكاش و تنظيف الحزم
+flutter pub cache repair
+
+# إزالة build و إعادة بناء (حل مشاكل غريبة)
+flutter clean && flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+
+# ---------------------------
+# 10) أوامر مفيدة إضافية / نصائح
+# ---------------------------
+# استعراض الأجهزة المتاحة
+flutter devices
+
+# استعراض القيم البيئية لـ Flutter
+flutter config
+
+# معلومات عن المشروع ونسخة flutter المستخدمة
+flutter --version
+
+# تصدير أعمدة السجلات (logs)
+flutter logs -v
+
+# ---------------------------
+# ملاحظات عامة
+# ---------------------------
+# - استخدم `--flavor` وتهيئة flavors في ملفات Gradle/iOS إذا تريد بناء إصدارات متعددة (staging/prod).
+# - تأكد من أن ملفات التوقيع والسجلات (keystore, provisioning profiles) مضبوطة في بيئة CI قبل البناء.
+# - ضَع أوامر التوليد (build_runner, localization generation, icon generation) في سكريبتات package.json أو shell scripts لتسهيل الاستخدام.
+# - عند وجود مشاكل توليد، جرب `flutter clean` ثم إعادة `flutter pub get` و `build_runner clean` ثم `build_runner build`.
+
+
+
