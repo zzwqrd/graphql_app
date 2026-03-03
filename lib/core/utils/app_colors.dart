@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class AppColors {
-  static const Color primaryColor = Color(0xff01BE5F);
+  static const Color primaryColor = Color(0xffbc8b57);
   static const Color favColor = Color(0xFFFFFFFF);
   static const Color primaryColor1 = Color(0xffD3FFE5);
   static const Color primaryBackgroundColor = Color(0xffFFFFFF);
@@ -58,11 +58,13 @@ class AppColors {
   static const errorColor = Color(0xffD00416); // لون الأخطاء
 
   // Background Colors
-  static const scaffoldBackgroundColor =
-      Color(0xffffffff); // خلفية الشاشة (لغة عربية)
+  static const scaffoldBackgroundColor = Color(
+    0xffffffff,
+  ); // خلفية الشاشة (لغة عربية)
   static const cardBackgroundColor = Color(0xffffffff); // خلفية الكروت
-  static const darkScaffoldBackgroundColor =
-      Color(0xff121212); // خلفية الوضع الداكن
+  static const darkScaffoldBackgroundColor = Color(
+    0xff121212,
+  ); // خلفية الوضع الداكن
 
   // Text Colors
   static const primaryTextColor = Color(0xff113342); // نص أساسي

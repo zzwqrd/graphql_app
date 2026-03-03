@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 /// Comprehensive Color Extensions for Flutter
 extension ColorExtensions on dynamic {
   // Primary Colors
-  Color get primaryColor => const Color(0xFF00c76a);
-  Color get primaryLight => const Color(0xFF00c76a);
-  Color get primaryDark => const Color(0xFF00c76a);
+  Color get primaryColor => const Color(0xffbc8b57);
+  Color get primaryLight => const Color(0xffbc8b57);
+  Color get primaryDark => const Color(0xffbc8b57);
 
   // Main Colors
 
-  Color get mainColor => const Color(0xFF00c76a);
+  Color get mainColor => const Color(0xffbc8b57);
   Color get mainLight => const Color(0xFF64B5F6);
   Color get mainDark => const Color(0xFF00c76a);
   Color get mainBackgroundColor => const Color(0xFFF5F5F5);

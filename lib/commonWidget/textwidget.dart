@@ -9,6 +9,7 @@ class TextWidget extends StatelessWidget {
     this.color,
     this.fontSize,
     this.fontWeight,
+    this.fontStyle,
     this.maxLines,
     this.overflow,
     this.decoration,
@@ -16,6 +17,7 @@ class TextWidget extends StatelessWidget {
   final String? text;
   final Color? color;
   final FontWeight? fontWeight;
+  final FontStyle? fontStyle;
   final double? fontSize;
   final TextAlign? textAlign;
   final int? maxLines;
@@ -30,6 +32,7 @@ class TextWidget extends StatelessWidget {
       style: TextStyle(
         color: color,
         fontWeight: fontWeight,
+        fontStyle: fontStyle,
         fontSize: fontSize,
         decoration: decoration,
         height: 1.h,
