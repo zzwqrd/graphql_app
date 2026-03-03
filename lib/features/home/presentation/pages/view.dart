@@ -16,27 +16,37 @@ import '../widgets/fragrances_uae_arabic_widget.dart';
 import '../widgets/home_banner_slider_widget.dart';
 import '../widgets/new_arrivals_slider_widget.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    sl<HomeCubit>()
+      ..getHome()
+      ..getHomeBanners('home')
+      ..getProductCmsBlocks(['home-usp', 'home_usp', 'ajmal-usp'])
+      ..getCraftingMemoriesBlock()
+      ..getEnhancedSliderProducts('new-arrivals-qatar');
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: sl<HomeCubit>()
-        ..getHome()
-        ..getHomeBanners('home')
-        ..getProductCmsBlocks(['home-usp'])
-        ..getCraftingMemoriesBlock()
-        ..getEnhancedSliderProducts('new-arrivals-qatar'),
+      value: sl<HomeCubit>(),
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          if (state.requestState.isLoading) {
+          if (state.requestState.isLoading && state.homeResponse == null) {
             return const HomeShimmer();
           }
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 const HomeBannerSliderWidget().center.py6,
                 const CmsBlockWidget(identifier: 'home-usp').px4,

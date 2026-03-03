@@ -8,58 +8,89 @@ import '../../../../../commonWidget/app_field.dart';
 import '../../../../../commonWidget/button_animation/LoadingButton.dart';
 import '../../../../../core/routes/app_routes_fun.dart';
 import '../../../../../core/routes/routes.dart';
+import '../../../../../core/utils/enums.dart';
 import '../../../../../core/utils/extensions_app/extensions_init.dart';
+import '../../../../../core/utils/flash_helper.dart';
 import '../../../../../di/service_locator.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/locale_keys.g.dart';
 import '../manager/controller.dart';
+import '../manager/form_manager.dart';
 import '../manager/state.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  final _formManager = LoginFormManager();
+
+  @override
+  void dispose() {
+    _formManager.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bloc = sl<LoginCubit>();
     return Scaffold(
-      body: Form(
-        key: bloc.formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MyAssets.icons.iconAppG.image(width: 150.w).pb8,
-
-            // "welcome back".h3.center.pb3,
-            AppCustomForm.email(
-              hintText: tr(LocaleKeys.auth_email_placeholder),
-              controller: TextEditingController(text: bloc.loginModel.email),
-            ).pb3,
-
-            AppCustomForm.password(
-              hintText: tr(LocaleKeys.auth_password_placeholder),
-              controller: TextEditingController(text: bloc.loginModel.password),
-            ).pb6,
-
-            BlocBuilder<LoginCubit, LoginState>(
-              bloc: bloc,
-              builder: (context, state) {
-                return LoadingButton(
-                  isAnimating: state.requestState.isLoading,
-                  title: tr(LocaleKeys.auth_title),
-                  onTap: () {
-                    bloc.login();
-                  },
-                );
-              },
-            ).pb6,
-            "الدخول كا زائر".h5.center.inkWell(
-              onTap: () {
-                pushAndRemoveUntil(NamedRoutes.i.layout);
-              },
-            ),
-          ],
-        ).center.pb8.px4,
+      body: BlocListener<LoginCubit, LoginState>(
+        bloc: bloc,
+        listener: (context, state) {
+          if (state.requestState == RequestState.done) {
+            pushAndRemoveUntil(NamedRoutes.i.layout);
+            FlashHelper.showToast(
+              'تم تسجيل الدخول بنجاح',
+              type: MessageTypeTost.success,
+            );
+          } else if (state.requestState == RequestState.error) {
+            FlashHelper.showToast(state.errorMessage ?? 'حدث خطأ ما');
+          }
+        },
+        child: Form(
+          key: _formManager.formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MyAssets.icons.iconAppG.image(width: 150.w).pb8,
+              AppCustomForm.email(
+                hintText: tr(LocaleKeys.auth_email_placeholder),
+                controller: _formManager.emailController,
+              ).pb3,
+              AppCustomForm.password(
+                hintText: tr(LocaleKeys.auth_password_placeholder),
+                controller: _formManager.passwordController,
+              ).pb6,
+              BlocBuilder<LoginCubit, LoginState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  return LoadingButton(
+                    isAnimating: state.requestState.isLoading,
+                    title: tr(LocaleKeys.auth_title),
+                    onTap: () {
+                      if (_formManager.formKey.currentState!.validate()) {
+                        bloc.login(
+                          email: _formManager.emailController.text,
+                          password: _formManager.passwordController.text,
+                        );
+                      }
+                    },
+                  );
+                },
+              ).pb6,
+              "الدخول كا زائر".h5.center.inkWell(
+                onTap: () {
+                  pushAndRemoveUntil(NamedRoutes.i.layout);
+                },
+              ),
+            ],
+          ).center.pb8.px4,
+        ),
       ),
     );
   }

@@ -1,6 +1,10 @@
 import 'package:get_it/get_it.dart';
 
 import '../core/services/dio_services.dart';
+import '../features/auth/login/data/datasources/data_source.dart';
+import '../features/auth/login/data/repositories/repository_impl.dart';
+import '../features/auth/login/domain/repositories/repository.dart';
+import '../features/auth/login/domain/usecases/login_usecase.dart';
 import '../features/auth/login/presentation/manager/controller.dart';
 import '../features/cart/presentation/controller/controller.dart';
 import '../features/category/presentation/controller/controller.dart';
@@ -22,13 +26,22 @@ class ServicesLocator {
     // Core Services
     sl.registerLazySingleton<DioServices>(() => DioServices());
 
+    // Login Feature
+    sl.registerLazySingleton<LoginDataSourceImpl>(() => LoginDataSourceImpl());
+    sl.registerLazySingleton<LoginRepository>(
+      () => LoginRepositoryImpl(sl<LoginDataSourceImpl>()),
+    );
+    sl.registerLazySingleton<LoginUsecase>(
+      () => LoginUseCaseImpl(sl<LoginRepository>()),
+    );
+
     // Features Controllers
     sl.registerFactory<SplashCubit>(() => SplashCubit());
     sl.registerFactory<LanguageCubit>(
       () => LanguageCubit()..changeLanguage('ar'),
     );
     sl.registerLazySingleton<LayoutCubit>(() => LayoutCubit());
-    sl.registerFactory<LoginCubit>(() => LoginCubit());
+    sl.registerFactory<LoginCubit>(() => LoginCubit(sl<LoginUsecase>()));
     sl.registerLazySingleton<CategoryCubit>(() => CategoryCubit());
 
     // sl.registerFactory<ProductCubit>(() => ProductCubit()); // Class not found in codebase

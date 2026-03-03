@@ -40,8 +40,9 @@ class EnhancedSliderOutput {
       description: json['description'] as String?,
       type: json['type'] as String?,
       productsNumber: json['products_number'] as int?,
-      items: json['items'] != null
+      items: (json['items'] is List)
           ? (json['items'] as List)
+                .where((i) => i != null && i is Map<String, dynamic>)
                 .map(
                   (i) => EnhancedSliderItem.fromJson(i as Map<String, dynamic>),
                 )
@@ -52,7 +53,7 @@ class EnhancedSliderOutput {
 }
 
 class EnhancedSliderItem {
-  final String uid; // Fallback from id or SKU if uid missing
+  final String uid;
   final String sku;
   final String name;
   final String image;
@@ -61,6 +62,7 @@ class EnhancedSliderItem {
   final CustomAttributesAjmalData? customAttributes;
   final double averageRating;
   final int ratingCount;
+  final List<ProductRating> ratings;
 
   EnhancedSliderItem({
     required this.uid,
@@ -72,23 +74,23 @@ class EnhancedSliderItem {
     this.customAttributes,
     this.averageRating = 0,
     this.ratingCount = 0,
+    this.ratings = const [],
   });
 
   factory EnhancedSliderItem.fromJson(Map<String, dynamic> json) {
-    // Attempting to extract single custom attribute item
     CustomAttributesAjmalData? customAttrs;
-    if (json['customAttributesAjmalData'] != null &&
-        (json['customAttributesAjmalData'] as List).isNotEmpty) {
-      customAttrs = CustomAttributesAjmalData.fromJson(
-        (json['customAttributesAjmalData'] as List).first
-            as Map<String, dynamic>,
-      );
+    final dynamic ajmalData = json['customAttributesAjmalData'];
+    if (ajmalData != null && ajmalData is List && ajmalData.isNotEmpty) {
+      if (ajmalData.first != null && ajmalData.first is Map<String, dynamic>) {
+        customAttrs = CustomAttributesAjmalData.fromJson(
+          ajmalData.first as Map<String, dynamic>,
+        );
+      }
     }
 
     double calcAvgRating = 0.0;
     if (json['average_rating'] != null) {
       calcAvgRating = (json['average_rating'] as num).toDouble();
-      // If the backend returns percentage out of 100, convert to 5 star scale
       if (calcAvgRating > 5) {
         calcAvgRating = calcAvgRating * 5 / 100;
       }
@@ -103,12 +105,20 @@ class EnhancedSliderItem {
       uid: json['uid']?.toString() ?? json['id']?.toString() ?? '',
       sku: json['sku'] ?? '',
       name: json['name'] ?? '',
-      image: (json['image'] as String?)?.bestImageUrl ?? '',
+      image: (json['image'] is String)
+          ? (json['image'] as String).bestImageUrl
+          : '',
       priceRange: PriceRange.fromJson(json['price_range'] ?? {}),
       stockStatus: json['stock_status'] ?? 'OUT_OF_STOCK',
       customAttributes: customAttrs,
       averageRating: calcAvgRating,
       ratingCount: ratCount,
+      ratings: json['rating'] is List
+          ? (json['rating'] as List)
+                .where((r) => r != null && r is Map<String, dynamic>)
+                .map((r) => ProductRating.fromJson(r as Map<String, dynamic>))
+                .toList()
+          : [],
     );
   }
 }
@@ -118,12 +128,14 @@ class CustomAttributesAjmalData {
   final String? displaySize;
   final String? gender;
   final String? arabicProductName;
+  final String? availableForPickup;
 
   CustomAttributesAjmalData({
     this.displayCategory,
     this.displaySize,
     this.gender,
     this.arabicProductName,
+    this.availableForPickup,
   });
 
   factory CustomAttributesAjmalData.fromJson(Map<String, dynamic> json) {
@@ -132,6 +144,23 @@ class CustomAttributesAjmalData {
       displaySize: json['display_size'] as String?,
       gender: json['gender'] as String?,
       arabicProductName: json['arabic_product_name'] as String?,
+      availableForPickup: json['available_for_pickup'] as String?,
+    );
+  }
+}
+
+class ProductRating {
+  final String? voteId;
+  final String? value;
+  final String? percent;
+
+  ProductRating({this.voteId, this.value, this.percent});
+
+  factory ProductRating.fromJson(Map<String, dynamic> json) {
+    return ProductRating(
+      voteId: json['vote_id']?.toString(),
+      value: json['value']?.toString(),
+      percent: json['percent']?.toString(),
     );
   }
 }

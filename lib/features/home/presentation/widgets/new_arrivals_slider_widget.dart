@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,15 +10,21 @@ import '../../../../commonWidget/title.dart';
 import '../../../../core/routes/app_routes_fun.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../core/utils/enums.dart';
-import '../../../../core/utils/extensions_app/color/color_extensions.dart';
-import '../../../../core/utils/extensions_app/padding/padding_extensions.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../controller/controller.dart';
 import '../controller/state.dart';
 import 'enhanced_product_card.dart';
 
-class NewArrivalsSliderWidget extends StatelessWidget {
+class NewArrivalsSliderWidget extends StatefulWidget {
   const NewArrivalsSliderWidget({super.key});
+
+  @override
+  State<NewArrivalsSliderWidget> createState() =>
+      _NewArrivalsSliderWidgetState();
+}
+
+class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,26 +72,51 @@ class NewArrivalsSliderWidget extends StatelessWidget {
 
             SizedBox(height: 12.h),
 
-            // Products list
-            SizedBox(
-              height: 280.h, // Adjusted height to fit product card perfectly
-              child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                scrollDirection: Axis.horizontal,
-                itemCount: data.items.length,
-                separatorBuilder: (context, index) => SizedBox(width: 12.w),
-                itemBuilder: (context, index) {
-                  final item = data.items[index];
-                  return EnhancedProductCard(
-                    item: item,
-                    onCardTap: () {
-                      push(
-                        NamedRoutes.i.productDetails,
-                        arguments: {'sku': item.sku, 'name': item.name},
-                      );
-                    },
-                  );
+            // Products Carousel
+            CarouselSlider.builder(
+              itemCount: data.items.length,
+              itemBuilder: (context, index, _) {
+                final item = data.items[index];
+                return EnhancedProductCard(
+                  item: item,
+                  onCardTap: () {
+                    push(
+                      NamedRoutes.i.productDetails,
+                      arguments: {'sku': item.sku, 'name': item.name},
+                    );
+                  },
+                );
+              },
+              options: CarouselOptions(
+                height: 280.h,
+                viewportFraction: 0.45,
+                enableInfiniteScroll: false,
+                padEnds: false,
+                enlargeCenterPage: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
                 },
+              ),
+            ).px4,
+
+            SizedBox(height: 16.h),
+
+            // Dots Indicator
+            Center(
+              child: DotsIndicator(
+                dotsCount: data.items.length,
+                position: _currentIndex.toDouble(),
+                decorator: DotsDecorator(
+                  size: const Size.square(8.0),
+                  activeSize: const Size(20.0, 8.0),
+                  activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: context.borderColor,
+                  activeColor: context.black,
+                ),
               ),
             ),
 
@@ -96,10 +129,10 @@ class NewArrivalsSliderWidget extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: context.primaryColor, width: 1.5),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(24.w),
                       ),
                       padding: EdgeInsets.symmetric(
-                        horizontal: 32.w,
+                        horizontal: 48.w,
                         vertical: 12.h,
                       ),
                     ),

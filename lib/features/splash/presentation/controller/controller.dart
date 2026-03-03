@@ -15,19 +15,12 @@ class SplashCubit extends Cubit<SplashState> {
     try {
       await Future.delayed(const Duration(seconds: 3));
 
-      final nextRoute = await _determineNextRoute();
+      final bool isLoggedIn = preferences.getString("auth_token") != null;
+      final nextRoute = isLoggedIn ? NamedRoutes.i.layout : NamedRoutes.i.login;
 
-      emit(SplashState.ready(nextRoute: nextRoute));
+      emit(SplashState.navigationReady(nextRoute: nextRoute));
     } catch (e) {
       emit(SplashState.error(e.toString()));
-    }
-  }
-
-  Future<String> _determineNextRoute() async {
-    if (preferences.getString("auth_token") != null) {
-      return NamedRoutes.i.layout;
-    } else {
-      return NamedRoutes.i.login;
     }
   }
 }

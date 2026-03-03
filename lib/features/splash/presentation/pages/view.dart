@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/routes/routes.dart';
 import '../../../../core/routes/app_routes_fun.dart';
 import '../../../../core/utils/extensions_app/color/color_extensions.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart'
@@ -32,12 +29,11 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return BlocListener<SplashCubit, SplashState>(
       bloc: cubit,
-      listenWhen: (previous, current) => current.status == SplashStatus.ready,
+      listenWhen: (previous, current) =>
+          current.status == SplashStatus.navigationReady,
       listener: (context, state) {
-        if (state.status == SplashStatus.ready) {
-          log("splash ready -> ${state.nextRoute}");
-          final next = state.nextRoute ?? NamedRoutes.i.login;
-          replacement(next);
+        if (state.status == SplashStatus.navigationReady) {
+          pushAndRemoveUntil(state.nextRoute!);
         }
       },
       child: Scaffold(

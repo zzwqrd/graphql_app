@@ -7,7 +7,9 @@ import '../models/categories.dart';
 import '../models/login_model.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  final loginDataSource = LoginDataSourceImpl();
+  final LoginDataSourceImpl loginDataSource;
+
+  LoginRepositoryImpl(this.loginDataSource);
 
   @override
   Future<Either<HelperResponse, LoginData>> completeLogin(

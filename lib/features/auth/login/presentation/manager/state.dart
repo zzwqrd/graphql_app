@@ -1,23 +1,26 @@
 import '../../../../../core/utils/enums.dart';
+import '../../data/models/login_model.dart';
 
 class LoginState {
   final RequestState requestState;
-  final String msg;
-  final ErrorType errorType;
+  final String? errorMessage;
+  final LoginData? loginData;
 
   LoginState({
     this.requestState = RequestState.initial,
-    this.msg = '',
-    this.errorType = ErrorType.none,
+    this.errorMessage,
+    this.loginData,
   });
 
   LoginState copyWith({
     RequestState? requestState,
-    String? msg,
-    ErrorType? errorType,
-  }) => LoginState(
-    requestState: requestState ?? this.requestState,
-    msg: msg ?? this.msg,
-    errorType: errorType ?? this.errorType,
-  );
+    String? errorMessage,
+    LoginData? loginData,
+  }) {
+    return LoginState(
+      requestState: requestState ?? this.requestState,
+      errorMessage: errorMessage ?? this.errorMessage,
+      loginData: loginData ?? this.loginData,
+    );
+  }
 }

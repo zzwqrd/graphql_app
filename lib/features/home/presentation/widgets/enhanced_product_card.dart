@@ -84,7 +84,7 @@ class EnhancedProductCard extends StatelessWidget {
                           SizedBox(width: 2.w),
                           TextWidget(
                             text:
-                                '(${item.ratingCount}) ${item.averageRating.toStringAsFixed(1)}',
+                                '(${item.ratings.length}) ${item.averageRating.toStringAsFixed(1)}',
                             color: context.black,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
@@ -156,20 +156,7 @@ class EnhancedProductCard extends StatelessWidget {
 
               SizedBox(height: 12.h),
 
-              // Title
-              TextWidget(
-                text: productName,
-                color: context.textColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              SizedBox(height: 4.h),
-
-              // Custom Attributes Subtitle
+              // Custom Attributes Subtitle (Category / Size / Gender)
               if (subTitle.isNotEmpty)
                 TextWidget(
                   text: subTitle,
@@ -180,6 +167,19 @@ class EnhancedProductCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+
+              SizedBox(height: 4.h),
+
+              // Product Name
+              TextWidget(
+                text: productName,
+                color: context.textColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w700,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
 
               // Price
               FittedBox(

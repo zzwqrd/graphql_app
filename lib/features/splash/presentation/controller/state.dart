@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum SplashStatus { initial, loading, ready, error }
+enum SplashStatus { initial, loading, navigationReady, error }
 
 class SplashState extends Equatable {
   final SplashStatus status;
@@ -12,8 +12,8 @@ class SplashState extends Equatable {
   const SplashState.initial() : this._(status: SplashStatus.initial);
   const SplashState.loading({String? message})
     : this._(status: SplashStatus.loading, message: message);
-  const SplashState.ready({String? nextRoute})
-    : this._(status: SplashStatus.ready, nextRoute: nextRoute);
+  const SplashState.navigationReady({String? nextRoute})
+    : this._(status: SplashStatus.navigationReady, nextRoute: nextRoute);
   const SplashState.error(String message)
     : this._(status: SplashStatus.error, message: message);
 
