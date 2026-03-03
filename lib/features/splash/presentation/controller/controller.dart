@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../../app_initialize.dart';
+import '../../../../core/auth/auth_manager.dart';
 import '../../../../core/routes/routes.dart';
 import 'state.dart';
 
@@ -15,7 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
     try {
       await Future.delayed(const Duration(seconds: 3));
 
-      final bool isLoggedIn = preferences.getString("auth_token") != null;
+      final bool isLoggedIn = AuthManager.isAuthenticated;
       final nextRoute = isLoggedIn ? NamedRoutes.i.layout : NamedRoutes.i.login;
 
       emit(SplashState.navigationReady(nextRoute: nextRoute));

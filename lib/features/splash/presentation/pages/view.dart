@@ -18,17 +18,18 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  final cubit = sl<SplashCubit>();
+  late final SplashCubit _cubit;
   @override
   void initState() {
     super.initState();
-    cubit.start();
+    _cubit = sl<SplashCubit>();
+    _cubit.start();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<SplashCubit, SplashState>(
-      bloc: cubit,
+      bloc: _cubit,
       listenWhen: (previous, current) =>
           current.status == SplashStatus.navigationReady,
       listener: (context, state) {

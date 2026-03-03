@@ -27,6 +27,13 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formManager = LoginFormManager();
+  late final LoginCubit _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = sl<LoginCubit>();
+  }
 
   @override
   void dispose() {
@@ -36,10 +43,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = sl<LoginCubit>();
     return Scaffold(
       body: BlocListener<LoginCubit, LoginState>(
-        bloc: bloc,
+        bloc: _bloc,
         listener: (context, state) {
           if (state.requestState == RequestState.done) {
             pushAndRemoveUntil(NamedRoutes.i.layout);
@@ -67,14 +73,14 @@ class _LoginViewState extends State<LoginView> {
                 controller: _formManager.passwordController,
               ).pb6,
               BlocBuilder<LoginCubit, LoginState>(
-                bloc: bloc,
+                bloc: _bloc,
                 builder: (context, state) {
                   return LoadingButton(
                     isAnimating: state.requestState.isLoading,
                     title: tr(LocaleKeys.auth_title),
                     onTap: () {
                       if (_formManager.formKey.currentState!.validate()) {
-                        bloc.login(
+                        _bloc.login(
                           email: _formManager.emailController.text,
                           password: _formManager.passwordController.text,
                         );
