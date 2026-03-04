@@ -4,9 +4,9 @@ import '../utils/enums.dart';
 import 'dio_services.dart';
 import 'helper_respons.dart';
 
-/// 🌍 Base Mixin for any DataSource
+/// 🌍 Base Mixin class for any DataSource
 /// يدعم REST API + GraphQL مع تطبيق كامل لمبادئ SOLID
-mixin ApiClient {
+mixin class ApiClient {
   final DioServices _dio = DioServices.instance;
 
   // 🔧 دالة مساعدة مركزية للـ REST

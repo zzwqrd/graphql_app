@@ -14,9 +14,10 @@ import '../../../../../core/utils/flash_helper.dart';
 import '../../../../../di/service_locator.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/locale_keys.g.dart';
-import '../manager/controller.dart';
 import '../manager/form_manager.dart';
-import '../manager/state.dart';
+import '../manager_bloc/controller.dart';
+import '../manager_bloc/event.dart';
+import '../manager_bloc/state.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -27,12 +28,12 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formManager = LoginFormManager();
-  late final LoginCubit _bloc;
+  late final LoginBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = sl<LoginCubit>();
+    _bloc = sl<LoginBloc>();
   }
 
   @override
@@ -44,17 +45,13 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<LoginCubit, LoginState>(
+      body: BlocListener<LoginBloc, LoginStateBloc>(
         bloc: _bloc,
         listener: (context, state) {
           if (state.requestState == RequestState.done) {
             pushAndRemoveUntil(NamedRoutes.i.layout);
-            FlashHelper.showToast(
-              'تم تسجيل الدخول بنجاح',
-              type: MessageTypeTost.success,
-            );
           } else if (state.requestState == RequestState.error) {
-            FlashHelper.showToast(state.errorMessage ?? 'حدث خطأ ما');
+            FlashHelper.showToast(state.errorMessage ?? "");
           }
         },
         child: Form(
@@ -72,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
                 hintText: tr(LocaleKeys.auth_password_placeholder),
                 controller: _formManager.passwordController,
               ).pb6,
-              BlocBuilder<LoginCubit, LoginState>(
+              BlocBuilder<LoginBloc, LoginStateBloc>(
                 bloc: _bloc,
                 builder: (context, state) {
                   return LoadingButton(
@@ -80,9 +77,11 @@ class _LoginViewState extends State<LoginView> {
                     title: tr(LocaleKeys.auth_title),
                     onTap: () {
                       if (_formManager.formKey.currentState!.validate()) {
-                        _bloc.login(
-                          email: _formManager.emailController.text,
-                          password: _formManager.passwordController.text,
+                        _bloc.add(
+                          LoginSubmitted(
+                            email: _formManager.emailController.text,
+                            password: _formManager.passwordController.text,
+                          ),
                         );
                       }
                     },

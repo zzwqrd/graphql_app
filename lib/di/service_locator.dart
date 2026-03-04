@@ -6,6 +6,10 @@ import '../features/auth/login/data/repositories/repository_impl.dart';
 import '../features/auth/login/domain/repositories/repository.dart';
 import '../features/auth/login/domain/usecases/login_usecase.dart';
 import '../features/auth/login/presentation/manager/controller.dart';
+import '../features/auth/login/presentation/manager_bloc/controller.dart'
+    show LoginBloc;
+import '../features/auth/login/presentation/manager_old/controller.dart'
+    show LoginCubitOld;
 import '../features/cart/presentation/controller/controller.dart';
 import '../features/category/presentation/controller/controller.dart';
 import '../features/change_language/presentation/controller/controller.dart';
@@ -57,5 +61,7 @@ class ServicesLocator {
 
     // Address Management
     sl.registerFactory<AddressCubit>(() => AddressCubit());
+    sl.registerFactory<LoginCubitOld>(() => LoginCubitOld());
+    sl.registerFactory<LoginBloc>(() => LoginBloc());
   }
 }
