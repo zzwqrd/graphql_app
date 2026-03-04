@@ -29,22 +29,11 @@ class CartRepositoryImpl implements CartRepository {
     }
   }
 
-  static List<CartItem>? _itemsCache;
-
   @override
   Future<Either<HelperResponse, List<CartItem>>> getCart() async {
-    if (_itemsCache != null) {
-      _fetchAndCache(); // Refresh in background
-      return Right(_itemsCache!);
-    }
-    return _fetchAndCache();
-  }
-
-  Future<Either<HelperResponse, List<CartItem>>> _fetchAndCache() async {
     final result = await remoteDataSource.getCart();
     return result.fold((error) => Left(error), (cart) {
       _cartId = cart.id;
-      _itemsCache = cart.items;
       return Right(cart.items);
     });
   }

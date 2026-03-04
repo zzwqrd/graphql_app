@@ -75,8 +75,6 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
 
-    await Future.delayed(const Duration(milliseconds: 300));
-
     final result = await addToCartUseCase.call(product, quantity);
     result.fold(
       (error) {
@@ -128,8 +126,6 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
 
-    await Future.delayed(const Duration(milliseconds: 500));
-
     final result = await removeFromCartUseCase.call(itemId);
     result.fold(
       (error) {
@@ -177,8 +173,6 @@ class CartCubit extends Cubit<CartState> {
         itemId: itemId,
       ),
     );
-
-    await Future.delayed(const Duration(milliseconds: 500));
 
     final result = await updateCartQuantityUseCase.call(itemId, quantity);
     result.fold(
