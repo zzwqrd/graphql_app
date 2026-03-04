@@ -1,3 +1,5 @@
+import 'package:graphql_app/core/routes/go_router_config.dart';
+
 import '../../../../features/product_list/data/models/product_model.dart';
 import '../../../../core/utils/image_url_helper.dart';
 

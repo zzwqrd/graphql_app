@@ -66,9 +66,7 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
           children: [
             // Title
             if (data.displayTitle == 1)
-              TitleWidget(
-                text: data.title ?? data.sliderName ?? "جديدنا",
-              ).px4.pt6,
+              TitleWidget(text: data.sliderNameArabic ?? "جديدنا").px4.pt6,
 
             SizedBox(height: 12.h),
             //  ProductWidget(
@@ -89,7 +87,7 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
               options: CarouselOptions(
                 height: 280.h,
                 viewportFraction: 0.45,
-
+                pageSnapping: true,
                 enableInfiniteScroll: false,
                 padEnds: false,
                 enlargeCenterPage: false,
