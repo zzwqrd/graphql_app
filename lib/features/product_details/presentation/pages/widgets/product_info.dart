@@ -30,7 +30,7 @@ class ProductInfo extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            product.name,
+            product.localizedName,
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,

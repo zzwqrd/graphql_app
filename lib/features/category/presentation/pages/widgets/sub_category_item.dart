@@ -18,7 +18,7 @@ class SubCategoryItem extends StatelessWidget {
           NamedRoutes.i.productList,
           arguments: {
             'categoryUid': item.id.toString(),
-            'categoryName': item.name,
+            'categoryName': item.localizedName,
           },
         );
       },
@@ -39,7 +39,7 @@ class SubCategoryItem extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            item.name,
+            item.localizedName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

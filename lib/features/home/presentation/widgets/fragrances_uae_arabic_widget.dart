@@ -109,7 +109,7 @@ class FragrancesUaeArabicWidget extends StatelessWidget {
                         push(NamedRoutes.i.productList); // Placeholder route
                       },
                       child: Text(
-                        'أكتشف المزيد',
+                        trValue(ar: 'أكتشف المزيد', en: 'Discover More'),
                         style: TextStyle(
                           fontFamily: 'CairoBold',
                           fontSize: 14.sp,

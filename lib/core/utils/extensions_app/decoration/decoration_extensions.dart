@@ -36,7 +36,7 @@ extension AppDecorations on BuildContext {
   );
   // BoxDecoration(color: bgColor, borderRadius: 15.r)
   BoxDecoration categoryDecoration(Color color) =>
-      BoxDecoration(color: color, borderRadius: 15.r);
+      BoxDecoration(color: color, borderRadius: 15.br);
 
   BoxDecoration boxDecoration({required Color color}) => BoxDecoration(
     color: color,

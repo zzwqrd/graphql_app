@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/utils/extensions_app/extensions_init.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../commonWidget/custom_image.dart';
-import '../../../../core/utils/extensions_app/color/color_extensions.dart';
 import '../../../../features/product_list/data/models/product_model.dart';
 import '../../../../di/service_locator.dart';
 import '../../../../features/cart/presentation/controller/controller.dart';
@@ -13,7 +13,6 @@ import '../../../../features/wishlist/presentation/controller/state.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../commonWidget/textwidget.dart';
-import '../../../../core/utils/extensions_app/padding/padding_extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/locale_keys.g.dart';
 import 'product_quick_view.dart';
@@ -95,7 +94,7 @@ class ProductWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Text(
-                          "جديد",
+                          trValue(ar: "جديد", en: "New"),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 10.sp,
@@ -269,7 +268,7 @@ class ProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 32.h,
                       child: TextWidget(
-                        text: product.name,
+                        text: product.localizedName,
                         color: context.textColor,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,

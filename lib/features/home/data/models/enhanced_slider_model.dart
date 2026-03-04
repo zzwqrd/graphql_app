@@ -1,5 +1,4 @@
-import 'package:graphql_app/core/routes/go_router_config.dart';
-
+import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../../features/product_list/data/models/product_model.dart';
 import '../../../../core/utils/image_url_helper.dart';
 
@@ -52,6 +51,15 @@ class EnhancedSliderOutput {
           : [],
     );
   }
+
+  // String get localizedTitle => isAr
+  //     ? (sliderNameArabic ?? title ?? "جديدنا")
+  //     : (sliderName ?? title ?? "New Arrivals");
+  //translated
+  String get localizedTitle =>
+      isAr ? (sliderNameArabic ?? "اكتشف الكل") : (title ?? "Discover All");
+  //user trValue
+  String get localTitle => trValue(ar: sliderNameArabic ?? "", en: title ?? "");
 }
 
 class EnhancedSliderItem {
@@ -123,6 +131,11 @@ class EnhancedSliderItem {
           : [],
     );
   }
+
+  String get localizedName =>
+      customAttributes?.arabicProductName?.isNotEmpty == true && isAr
+      ? customAttributes!.arabicProductName!
+      : name;
 }
 
 class CustomAttributesAjmalData {

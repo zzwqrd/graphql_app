@@ -1,4 +1,5 @@
 import '../../../../core/utils/image_url_helper.dart';
+import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../product_list/data/models/product_model.dart';
 
 class ProductDetailsModel {
@@ -67,6 +68,11 @@ class ProductDetailsModel {
 
   /// Use ImageUrlHelper extension to get the best image URL
   String get displayImageUrl => smallImage.bestImageUrl;
+
+  String get localizedName => trValue(
+    ar: name,
+    en: name,
+  ); // TODO: Add specific Arabic field if available in API
 
   ProductModel toProductModel() {
     return ProductModel(

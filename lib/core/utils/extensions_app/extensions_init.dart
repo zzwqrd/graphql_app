@@ -32,3 +32,4 @@ export 'alignment/alignment_extensions.dart';
 export 'misc/date_extensions.dart';
 export 'misc/pagination_extensions.dart';
 export 'misc/list_extensions.dart';
+export 'misc/language_extensions.dart';

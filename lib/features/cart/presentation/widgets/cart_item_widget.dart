@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../commonWidget/custom_image.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../domain/entities/cart_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartItemWidget extends StatelessWidget {
   final CartItem item;
@@ -60,7 +60,7 @@ class CartItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      item.product.name,
+                      item.product.localizedName,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class CartItemWidget extends StatelessWidget {
                               ),
                               SizedBox(width: 5.w),
                               Text(
-                                'آزالة',
+                                trValue(ar: 'إزالة', en: 'Remove'),
                                 style: TextStyle(
                                   color: context.redColor,
                                   fontSize: 10.sp,

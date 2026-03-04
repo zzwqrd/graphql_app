@@ -15,20 +15,20 @@ extension NumExtensions on num {
   EdgeInsets get pr => EdgeInsets.only(right: toDouble());
 
   // Radius (BorderRadius)
-  BorderRadius get r => BorderRadius.circular(toDouble());
-  BorderRadius get rt => BorderRadius.only(
+  BorderRadius get br => BorderRadius.circular(toDouble());
+  BorderRadius get brt => BorderRadius.only(
     topLeft: Radius.circular(toDouble()),
     topRight: Radius.circular(toDouble()),
   );
-  BorderRadius get rb => BorderRadius.only(
+  BorderRadius get brb => BorderRadius.only(
     bottomLeft: Radius.circular(toDouble()),
     bottomRight: Radius.circular(toDouble()),
   );
-  BorderRadius get rl => BorderRadius.only(
+  BorderRadius get brl => BorderRadius.only(
     topLeft: Radius.circular(toDouble()),
     bottomLeft: Radius.circular(toDouble()),
   );
-  BorderRadius get rr => BorderRadius.only(
+  BorderRadius get brr => BorderRadius.only(
     topRight: Radius.circular(toDouble()),
     bottomRight: Radius.circular(toDouble()),
   );

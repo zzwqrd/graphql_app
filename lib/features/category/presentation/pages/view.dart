@@ -66,7 +66,7 @@ class _CategoryBody extends StatelessWidget {
                             final category = categories[index];
                             return SidebarItem(
                               index: index,
-                              label: category.name,
+                              label: category.localizedName,
                               imageUrl: category.displayImageUrl,
                               isSelected: selectedCategory?.uid == category.uid,
                               onTap: () {
@@ -85,7 +85,7 @@ class _CategoryBody extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SelectedCategoryHeader(
-                        categoryName: selectedCategory?.name ?? '',
+                        categoryName: selectedCategory?.localizedName ?? '',
                         productCount: products.length,
                       ),
                       Padding(

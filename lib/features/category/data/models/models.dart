@@ -63,6 +63,8 @@ class CategoryItem {
 
     return [];
   }
+
+  String get localizedName => name;
 }
 
 class ProductList {
@@ -113,4 +115,6 @@ class ProductItem {
     );
   }
   String get displayImageUrl => smallImage?.bestImageUrl ?? '';
+
+  String get localizedName => name;
 }

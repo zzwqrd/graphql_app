@@ -15,7 +15,7 @@ class AllCategoriesHeader extends StatelessWidget {
             .container(decoration: context.secondaryDecoration)
             .paddingSymmetric(horizontal: 8.w, vertical: 8.h),
 
-        'All Categories'.textCatogory(),
+        trValue(ar: 'كل الفئات', en: 'All Categories').textCatogory(),
       ],
     ).paddingSymmetric(horizontal: 8.w);
   }

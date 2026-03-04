@@ -35,7 +35,7 @@ class ProductDetailsView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppAppBar(
-          title: 'تفاصيل المنتج',
+          title: LocaleKeys.product_details_page_title.tr(),
           actions: [
             IconButton(
               icon: Icon(Icons.share, color: context.mainColor),

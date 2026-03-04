@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/routes/app_routes_fun.dart';
-import '../../../../../core/utils/extensions_app/padding/padding_extensions.dart';
+import '../../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../../../gen/locale_keys.g.dart';
 import '../../../data/models/models.dart';
 import 'category_products_preview.dart';
@@ -28,7 +28,7 @@ class SubCategorySection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              subCategory.name,
+              subCategory.localizedName,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class SubCategorySection extends StatelessWidget {
                   NamedRoutes.i.productList,
                   arguments: {
                     'categoryUid': subCategory.id.toString(),
-                    'categoryName': subCategory.name,
+                    'categoryName': subCategory.localizedName,
                   },
                 );
               },
@@ -81,7 +81,10 @@ class SubCategorySection extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 8.h),
             child: Text(
-              'No items in this section',
+              trValue(
+                ar: 'لا توجد منتجات في هذا القسم',
+                en: 'No items in this section',
+              ),
               style: TextStyle(fontSize: 12.sp, color: Colors.grey),
             ),
           ),

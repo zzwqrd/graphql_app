@@ -64,4 +64,6 @@ class HomeCategoryModel {
   }
 
   String get displayImageUrl => image.bestImageUrl;
+
+  String get localizedName => name;
 }

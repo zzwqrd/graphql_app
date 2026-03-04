@@ -68,7 +68,10 @@ class _WishlistViewState extends State<WishlistView> {
 
                 // Title
                 Text(
-                  'احفظ منتجاتك المفضلة',
+                  trValue(
+                    ar: 'احفظ منتجاتك المفضلة',
+                    en: 'Save your favorites',
+                  ),
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
@@ -80,7 +83,10 @@ class _WishlistViewState extends State<WishlistView> {
 
                 // Description
                 Text(
-                  'سجل دخول لحفظ المنتجات التي تعجبك\nوالوصول إليها في أي وقت',
+                  trValue(
+                    ar: 'سجل دخول لحفظ المنتجات التي تعجبك\nوالوصول إليها في أي وقت',
+                    en: 'Log in to save your favorite products\nand access them anytime',
+                  ),
                   style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
@@ -99,7 +105,7 @@ class _WishlistViewState extends State<WishlistView> {
                       ),
                     ),
                     child: Text(
-                      'تسجيل الدخول',
+                      trValue(ar: 'تسجيل الدخول', en: 'Login'),
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,

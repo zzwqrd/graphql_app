@@ -35,9 +35,7 @@ class EnhancedProductCard extends StatelessWidget {
       attrParts.add(attrs.gender!);
     }
     final subTitle = attrParts.join(' / ');
-    final productName = attrs?.arabicProductName?.isNotEmpty == true
-        ? attrs!.arabicProductName!
-        : item.name;
+    final productName = item.localizedName;
 
     return GestureDetector(
       onTap: onCardTap,

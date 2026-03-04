@@ -119,6 +119,8 @@ class ProductModel {
       priceRange.minimumPrice.discount.hasDiscount ||
       (specialPrice != null &&
           specialPrice! < priceRange.minimumPrice.regularPrice.value);
+
+  String get localizedName => name;
 }
 
 class SmallImage {

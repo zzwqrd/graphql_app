@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../gen/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../cart/presentation/widgets/product_details_cart_controls.dart';
@@ -36,7 +38,7 @@ class BottomActionBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.r),
               ),
               child: Text(
-                'غير متوفر بالمخزن',
+                LocaleKeys.product_list_out_of_stock.tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -73,7 +75,7 @@ class BottomActionBarNew extends StatelessWidget {
               borderRadius: BorderRadius.circular(25.r),
             ),
             child: Text(
-              'غير متوفر بالمخزن',
+              LocaleKeys.product_list_out_of_stock.tr(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

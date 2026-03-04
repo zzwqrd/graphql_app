@@ -34,7 +34,9 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TitleWidget(text: "جديدنا").px4.pt6,
+              TitleWidget(
+                text: state.newArrivalsData?.localizedTitle ?? "",
+              ).px4.pt6,
               SizedBox(height: 12.h),
               SizedBox(
                 height: 280.h,
@@ -66,7 +68,10 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
           children: [
             // Title
             if (data.displayTitle == 1)
-              TitleWidget(text: data.sliderNameArabic ?? "جديدنا").px4.pt6,
+              // TitleWidget(text: data.localizedTitle).px4.pt6,
+              TitleWidget(
+                text: trValue(ar: data.sliderNameArabic, en: data.title),
+              ).px4.pt6,
 
             SizedBox(height: 12.h),
             //  ProductWidget(
@@ -166,7 +171,7 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                       ),
                     ),
                     child: TextWidget(
-                      text: "إكتشف الكل",
+                      text: trValue(ar: "إكتشف الكل", en: "Discover All"),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: context.primaryColor,

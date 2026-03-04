@@ -7,8 +7,7 @@ import '../../../../core/utils/extensions_app/color/color_extensions.dart';
 import '../../../../core/utils/extensions_app/widget/widget_extensions.dart';
 import '../../../../commonWidget/app_field.dart';
 import '../../../../core/routes/routes.dart';
-import '../../../../core/utils/extensions_app/extensions_init.dart'
-    show PaddingExtensions, AlignmentExtensions;
+import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../gen/assets.gen.dart';
 import '../controller/controller.dart';
@@ -141,7 +140,10 @@ class CartView extends StatelessWidget {
             children: [
               Expanded(
                 child: AppCustomForm(
-                  hintText: "اكتب كود الخصم",
+                  hintText: trValue(
+                    ar: "اكتب كود الخصم",
+                    en: "Enter coupon code",
+                  ),
                   controller: TextEditingController(text: ""),
                 ),
               ),
@@ -156,7 +158,7 @@ class CartView extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    "تفعيل",
+                    trValue(ar: "تفعيل", en: "Apply"),
                     style: TextStyle(
                       color: context.white,
                       fontSize: 14.sp,
@@ -171,7 +173,10 @@ class CartView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'المجموع الفرعي (${items.length} منتج)',
+                trValue(ar: 'المجموع الفرعي', en: 'Subtotal') +
+                    ' (${items.length} ' +
+                    trValue(ar: 'منتج', en: 'item') +
+                    ')',
                 style: TextStyle(fontSize: 12.sp),
               ),
               Text(
@@ -188,7 +193,10 @@ class CartView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('المجموع شامل الضريبة', style: TextStyle(fontSize: 12.sp)),
+              Text(
+                trValue(ar: 'المجموع شامل الضريبة', en: 'Total (Incl. Tax)'),
+                style: TextStyle(fontSize: 12.sp),
+              ),
               Text(
                 'EGP ${totalAmount.toStringAsFixed(2)}',
                 style: TextStyle(
@@ -232,7 +240,7 @@ class CartView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'إتمام الشراء',
+                              trValue(ar: 'إتمام الشراء', en: 'Checkout'),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.sp,
@@ -240,7 +248,9 @@ class CartView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '(${items.length} منتج)',
+                              '(${items.length} ' +
+                                  trValue(ar: 'منتج', en: 'item') +
+                                  ')',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14.sp,

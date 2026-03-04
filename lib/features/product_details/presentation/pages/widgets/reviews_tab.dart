@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../data/models/product_details_model.dart';
 
 class ReviewsTab extends StatelessWidget {
@@ -13,7 +14,7 @@ class ReviewsTab extends StatelessWidget {
     if (product.reviews.isEmpty) {
       return Center(
         child: Text(
-          'لا توجد تقييمات بعد',
+          trValue(ar: 'لا توجد تقييمات بعد', en: 'No reviews yet'),
           style: TextStyle(fontSize: 14.sp, color: Colors.grey),
         ),
       );
@@ -53,7 +54,8 @@ class ReviewsTab extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'مراجعات (${product.reviewCount})',
+                      trValue(ar: 'مراجعات', en: 'Reviews') +
+                          ' (${product.reviewCount})',
                       style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                     ),
                   ],

@@ -33,7 +33,7 @@ class CategoryProductsPreview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                category.name,
+                category.localizedName,
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class CategoryProductsPreview extends StatelessWidget {
                     NamedRoutes.i.productList,
                     arguments: {
                       'categoryUid': category.id.toString(),
-                      'categoryName': category.name,
+                      'categoryName': category.localizedName,
                     },
                   );
                 },
@@ -74,7 +74,10 @@ class CategoryProductsPreview extends StatelessWidget {
               onTap: () {
                 push(
                   NamedRoutes.i.productDetails,
-                  arguments: {'sku': product.sku, 'name': product.name},
+                  arguments: {
+                    'sku': product.sku,
+                    'name': product.localizedName,
+                  },
                 );
               },
               child: Container(
@@ -95,7 +98,7 @@ class CategoryProductsPreview extends StatelessWidget {
                     ),
                     SizedBox(height: 8.h),
                     Text(
-                      product.name,
+                      product.localizedName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
