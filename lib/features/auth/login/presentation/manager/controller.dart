@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/auth/auth_manager.dart';
 import '../../../../../core/utils/enums.dart';
 import '../../data/models/login_model.dart';
-import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/usecase.dart';
 import 'state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

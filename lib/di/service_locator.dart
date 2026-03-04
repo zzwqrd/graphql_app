@@ -4,7 +4,7 @@ import '../core/services/dio_services.dart';
 import '../features/auth/login/data/datasources/data_source.dart';
 import '../features/auth/login/data/repositories/repository_impl.dart';
 import '../features/auth/login/domain/repositories/repository.dart';
-import '../features/auth/login/domain/usecases/login_usecase.dart';
+import '../features/auth/login/domain/usecases/usecase.dart';
 import '../features/auth/login/presentation/manager/controller.dart';
 import '../features/auth/login/presentation/manager_bloc/controller.dart'
     show LoginBloc;
