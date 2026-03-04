@@ -31,9 +31,9 @@ class ServicesLocator {
     sl.registerLazySingleton<DioServices>(() => DioServices());
 
     // Login Feature
-    sl.registerLazySingleton<LoginDataSourceImpl>(() => LoginDataSourceImpl());
+    sl.registerLazySingleton<LoginDataSource>(() => LoginDataSourceImpl());
     sl.registerLazySingleton<LoginRepository>(
-      () => LoginRepositoryImpl(sl<LoginDataSourceImpl>()),
+      () => LoginRepositoryImpl(sl<LoginDataSource>()),
     );
     sl.registerLazySingleton<LoginUsecase>(
       () => LoginUseCaseImpl(sl<LoginRepository>()),

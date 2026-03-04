@@ -201,7 +201,7 @@ class Money {
 
   factory Money.fromJson(Map<String, dynamic> json) {
     return Money(
-      value: (json['value'] as num?)?.toDouble() ?? 0.0,
+      value: (json['value'] as dynamic?)?.toDouble() ?? "",
       currency: json['currency'] ?? 'SAR',
     );
   }

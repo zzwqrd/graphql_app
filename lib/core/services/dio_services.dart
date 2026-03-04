@@ -97,18 +97,20 @@ class DioServices {
     // startInternetMonitoring();
 
     // Configure Dio's HttpClientAdapter with enhanced settings
-    _dio.httpClientAdapter = IOHttpClientAdapter()
-      ..onHttpClientCreate = (client) {
-        client.connectionTimeout = const Duration(seconds: 30);
-        client.idleTimeout = const Duration(seconds: 30);
-        client.maxConnectionsPerHost = 10;
-        client.badCertificateCallback = (cert, host, port) =>
-            true; // For debug only
-        return client;
-      };
+    // Configure Dio's HttpClientAdapter with enhanced settings
+    if (_dio.httpClientAdapter is IOHttpClientAdapter) {
+      (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+          (client) {
+            client.connectionTimeout = const Duration(seconds: 30);
+            client.idleTimeout = const Duration(seconds: 30);
+            client.maxConnectionsPerHost = 10;
+            client.badCertificateCallback = (cert, host, port) =>
+                true; // For debug only
+            return client;
+          };
+    }
     final token = preferences.getString('auth_token');
-    final lang =
-        navigatorKey.currentContext?.locale.languageCode ?? "ar";
+    final lang = navigatorKey.currentContext?.locale.languageCode ?? "ar";
     _dio.options = BaseOptions(
       baseUrl: AppConstants.baseUrl,
       connectTimeout: const Duration(seconds: 30),
@@ -130,7 +132,6 @@ class DioServices {
         // "Store": "qatar_$lang",
         // "Accept-Language": lang,        // لغة
         // "Accept-Language": "ar",
-
 
         // تمييز إنه موبايل (لو الباك بيستخدمه)
         "X-Platform": "mobile",
@@ -248,8 +249,7 @@ class DioServices {
   Interceptor _createLoggingInterceptor() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        final lang =
-           navigatorKey.currentContext?.locale.languageCode;
+        final lang = navigatorKey.currentContext?.locale.languageCode;
 
         options.headers.addAll({
           "Content-Type": "application/json",

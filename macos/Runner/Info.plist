@@ -8,6 +8,28 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
+	<!--
+CF### Android
+- Build the release APK and verify internet access.
+
+## Troubleshooting: "Operation not permitted" on macOS
+If you still see the `SocketException: Operation not permitted` error on macOS, it means the build is still using the old sandbox configuration. Please follow these steps to force a fresh build:
+
+1. **Clean the project**:
+   ```bash
+   flutter clean
+   ```
+2. **Re-fetch dependencies**:
+   ```bash
+   flutter pub get
+   ```
+3. **Run the app again**:
+   ```bash
+   flutter run -d macos
+   ```
+
+This error happens because macOS Sandbox permissions are often cached by Xcode and a simple hot reload is not enough to apply changes to the `.entitlements` files.
+-->
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -28,5 +50,10 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
