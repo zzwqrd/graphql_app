@@ -13,6 +13,8 @@ import 'widgets/image_slider.dart';
 import 'widgets/product_info.dart';
 import 'widgets/reviews_tab.dart';
 import '../../../../commonWidget/shimmer/product_details_shimmer.dart';
+import '../../../../commonWidget/app_app_bar.dart';
+import '../../../../commonWidget/responsive_layout.dart';
 import '../../../../gen/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -32,22 +34,8 @@ class ProductDetailsView extends StatelessWidget {
       create: (context) => sl<ProductDetailsCubit>()..getProductDetails(sku),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(
-            'تفاصيل المنتج',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
+        appBar: AppAppBar(
+          title: 'تفاصيل المنتج',
           actions: [
             IconButton(
               icon: Icon(Icons.share, color: context.mainColor),
@@ -76,66 +64,93 @@ class ProductDetailsView extends StatelessWidget {
             return Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ImageSlider(images: product.mediaGallery),
-                        SizedBox(height: 16.h),
-                        ProductInfo(product: product),
-                        SizedBox(height: 24.h),
-                        DefaultTabController(
-                          length: 2,
-                          child: Column(
-                            children: [
-                              TabBar(
-                                labelColor: context.mainColor,
-                                labelStyle: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                unselectedLabelColor: Colors.grey,
-                                indicatorColor: context.mainColor,
-                                tabs: [
-                                  Tab(
-                                    text: LocaleKeys
-                                        .product_details_description_tab
-                                        .tr(),
-                                  ),
-                                  Tab(
-                                    text: LocaleKeys.product_details_reviews_tab
-                                        .tr(),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 300.h, // Fixed height for tab content
-                                child: TabBarView(
-                                  children: [
-                                    DescriptionTab(
-                                      description: product.description
-                                          ?.toString()
-                                          .plainText,
-                                    ),
-                                    ReviewsTab(product: product),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                  child: ResponsiveLayout(
+                    mobile: _buildMobileLayout(context, product),
+                    tablet: _buildTabletLayout(context, product),
                   ),
                 ),
                 BottomActionBar(
                   isOutOfStock: product.stockStatus == 'OUT_OF_STOCK',
                   product: product.toProductModel(),
-                ),
+                ).constrained(),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildMobileLayout(BuildContext context, dynamic product) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ImageSlider(images: product.mediaGallery),
+          SizedBox(height: 16.h),
+          ProductInfo(product: product),
+          SizedBox(height: 24.h),
+          _buildTabs(context, product),
+        ],
+      ),
+    ).constrained().responsivePadding(context);
+  }
+
+  Widget _buildTabletLayout(BuildContext context, dynamic product) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 1,
+          child: SingleChildScrollView(
+            child: ImageSlider(images: product.mediaGallery),
+          ),
+        ),
+        SizedBox(width: 24.w),
+        Expanded(
+          flex: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProductInfo(product: product),
+                SizedBox(height: 24.h),
+                _buildTabs(context, product),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ).constrained().responsivePadding(context);
+  }
+
+  Widget _buildTabs(BuildContext context, dynamic product) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          TabBar(
+            labelColor: context.mainColor,
+            labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: context.mainColor,
+            tabs: [
+              Tab(text: LocaleKeys.product_details_description_tab.tr()),
+              Tab(text: LocaleKeys.product_details_reviews_tab.tr()),
+            ],
+          ),
+          SizedBox(
+            height: 400.h, // Adjusted height for better content visibility
+            child: TabBarView(
+              children: [
+                DescriptionTab(
+                  description: product.description?.toString().plainText,
+                ),
+                ReviewsTab(product: product),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

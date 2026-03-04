@@ -53,11 +53,11 @@ class _CategoryBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 90.w,
+                  width: context.sidebarWidth,
                   color: Colors.grey[100],
                   child: Column(
                     children: [
-                      AllCategoriesHeader().py6,
+                      const AllCategoriesHeader().py6,
                       Expanded(
                         child: ListView.builder(
                           itemCount: categories.length,
@@ -162,7 +162,7 @@ class _CategoryBody extends StatelessWidget {
                   ),
                 ),
               ],
-            );
+            ).constrained().responsivePadding(context);
           },
         );
       },

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../commonWidget/shimmer/home_shimmer.dart';
-import '../../../../commonWidget/title.dart';
+import '../../../../commonWidget/section_header.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../../../../gen/locale_keys.g.dart';
 import '../controller/controller.dart';
@@ -52,11 +52,16 @@ class _HomeViewState extends State<HomeView> {
                 const CmsBlockWidget(identifier: 'home-usp').px4,
                 const FragrancesUaeArabicWidget().px4.py6,
                 const NewArrivalsSliderWidget(),
-                TitleWidget(text: LocaleKeys.home_categories.tr()).px4.pt6,
+                SectionHeader(
+                  title: LocaleKeys.home_categories.tr(),
+                  onViewAll: () {
+                    // Navigate to categories or show all
+                  },
+                ).px4.pt6,
                 CategoryWidget().px4.pt2,
                 SizedBox(height: 120.h),
               ],
-            ),
+            ).constrained().responsivePadding(context),
           );
         },
       ),

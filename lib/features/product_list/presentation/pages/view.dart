@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../commonWidget/custom_image.dart';
+import '../../../../commonWidget/app_app_bar.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -69,22 +70,8 @@ class _ProductListBody extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.grey[50],
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Text(
-              categoryName,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            actionsPadding: EdgeInsets.symmetric(horizontal: 15.w),
+          appBar: AppAppBar(
+            title: categoryName,
             actions: [
               CustomImage(
                 MyAssets.icons.filter.path,
@@ -97,7 +84,6 @@ class _ProductListBody extends StatelessWidget {
                 },
               ),
             ],
-            centerTitle: true,
           ),
           body: Builder(
             builder: (context) {
@@ -119,134 +105,111 @@ class _ProductListBody extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.all(16.w),
-                      child: BlocBuilder<ProductListCubit, ProductListState>(
-                        builder: (context, state) {
-                          return Column(
-                            children: [
-                              // FilterSortBar(
-                              //   onSortTap: () {
-                              //     _showFilterSortSheet(context, state);
-                              //   },
-                              //   onFilterTap: () {
-                              //     _showFilterSortSheet(context, state);
-                              //   },
-                              // ),
-                              if (state.requestState == RequestState.loading &&
-                                  state.allProducts.isEmpty)
-                                const Expanded(child: ProductShimmer())
-                              else if (state.requestState ==
-                                      RequestState.error &&
-                                  state.allProducts.isEmpty)
-                                Expanded(child: Center(child: Text(state.msg)))
-                              else if (state.requestState ==
-                                      RequestState.done &&
-                                  state.allProducts.isEmpty)
-                                Expanded(
-                                  child: MyAssets.lottie.emptyBox
-                                      .lottie(width: 150.w)
-                                      .center,
-                                )
-                              else
-                                Expanded(
-                                  child: NotificationListener<ScrollNotification>(
-                                    onNotification: (scrollInfo) {
-                                      if (scrollInfo.metrics.pixels ==
-                                              scrollInfo
-                                                  .metrics
-                                                  .maxScrollExtent &&
-                                          !state.hasReachedMax &&
-                                          state.requestState !=
-                                              RequestState.loading) {
-                                        context
-                                            .read<ProductListCubit>()
-                                            .loadMore();
-                                      }
-                                      return false;
-                                    },
-                                    child: CustomScrollView(
-                                      slivers: [
-                                        SliverPadding(
-                                          padding: EdgeInsets.all(5.w),
-                                          sliver: SliverGrid(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio:
-                                                      0.62, // Adjusted for ProductWidget
-                                                  crossAxisSpacing: 10.w,
-                                                  mainAxisSpacing: 16.h,
-                                                ),
-                                            delegate: SliverChildBuilderDelegate(
-                                              (context, index) {
-                                                if (index >=
-                                                    state
-                                                        .displayedProducts
-                                                        .length) {
-                                                  return const Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  );
-                                                }
-                                                final product = state
-                                                    .displayedProducts[index];
+                      child: Column(
+                        children: [
+                          if (state.requestState == RequestState.loading &&
+                              state.allProducts.isEmpty)
+                            const Expanded(child: ProductShimmer())
+                          else if (state.requestState == RequestState.error &&
+                              state.allProducts.isEmpty)
+                            Expanded(child: Center(child: Text(state.msg)))
+                          else if (state.requestState == RequestState.done &&
+                              state.allProducts.isEmpty)
+                            Expanded(
+                              child: MyAssets.lottie.emptyBox
+                                  .lottie(width: 150.w)
+                                  .center,
+                            )
+                          else
+                            Expanded(
+                              child: NotificationListener<ScrollNotification>(
+                                onNotification: (scrollInfo) {
+                                  if (scrollInfo.metrics.pixels ==
+                                          scrollInfo.metrics.maxScrollExtent &&
+                                      !state.hasReachedMax &&
+                                      state.requestState !=
+                                          RequestState.loading) {
+                                    context.read<ProductListCubit>().loadMore();
+                                  }
+                                  return false;
+                                },
+                                child: CustomScrollView(
+                                  slivers: [
+                                    SliverPadding(
+                                      padding: EdgeInsets.all(5.w),
+                                      sliver: SliverGrid(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount:
+                                                  context.gridColumnCount,
+                                              childAspectRatio: 0.62,
+                                              crossAxisSpacing: 10.w,
+                                              mainAxisSpacing: 16.h,
+                                            ),
+                                        delegate: SliverChildBuilderDelegate(
+                                          (context, index) {
+                                            if (index >=
+                                                state
+                                                    .displayedProducts
+                                                    .length) {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                            final product =
+                                                state.displayedProducts[index];
 
-                                                // Ensure we use the global cubit logic
-                                                return ProductWidget(
-                                                  product: product,
-                                                  onCardTap: () {
-                                                    push(
-                                                      NamedRoutes
-                                                          .i
-                                                          .productDetails,
-                                                      arguments: {
-                                                        'sku': product.sku,
-                                                        'name': product.name,
-                                                      },
-                                                    );
+                                            return ProductWidget(
+                                              product: product,
+                                              onCardTap: () {
+                                                push(
+                                                  NamedRoutes.i.productDetails,
+                                                  arguments: {
+                                                    'sku': product.sku,
+                                                    'name': product.name,
                                                   },
                                                 );
                                               },
-                                              childCount:
-                                                  state
-                                                      .displayedProducts
-                                                      .length +
-                                                  (state.hasReachedMax ? 0 : 0),
-                                            ),
-                                          ),
+                                            );
+                                          },
+                                          childCount:
+                                              state.displayedProducts.length,
                                         ),
-                                        if (state.requestState ==
-                                                RequestState.loading &&
-                                            state.allProducts.isNotEmpty)
-                                          SliverToBoxAdapter(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(16.w),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child:
-                                                        const ProductGridItemShimmer(),
+                                      ),
+                                    ),
+                                    if (state.requestState ==
+                                            RequestState.loading &&
+                                        state.allProducts.isNotEmpty)
+                                      SliverToBoxAdapter(
+                                        child: Padding(
+                                          padding: EdgeInsets.all(16.w),
+                                          child: Row(
+                                            children: List.generate(
+                                              context.gridColumnCount,
+                                              (index) => Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 8.w,
                                                   ),
-                                                  SizedBox(width: 16.w),
-                                                  Expanded(
-                                                    child:
-                                                        const ProductGridItemShimmer(),
-                                                  ),
-                                                ],
+                                                  child:
+                                                      const ProductGridItemShimmer(),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                      ],
-                                    ),
-                                  ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
-                            ],
-                          );
-                        },
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ),
                 ],
-              );
+              ).constrained().responsivePadding(context);
             },
           ),
         );

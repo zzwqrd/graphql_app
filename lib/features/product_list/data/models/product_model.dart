@@ -194,14 +194,14 @@ class Price {
 }
 
 class Money {
-  final double value;
+  final dynamic value;
   final String currency;
 
   Money({required this.value, required this.currency});
 
   factory Money.fromJson(Map<String, dynamic> json) {
     return Money(
-      value: (json['value'] as dynamic?)?.toDouble() ?? "",
+      value: (json['value'] as dynamic),
       currency: json['currency'] ?? 'SAR',
     );
   }
@@ -216,15 +216,15 @@ class Money {
 }
 
 class Discount {
-  final double amountOff;
-  final double percentOff;
+  final dynamic amountOff;
+  final dynamic percentOff;
 
   Discount({required this.amountOff, required this.percentOff});
 
   factory Discount.fromJson(Map<String, dynamic> json) {
     return Discount(
-      amountOff: (json['amount_off'] as num?)?.toDouble() ?? 0.0,
-      percentOff: (json['percent_off'] as num?)?.toDouble() ?? 0.0,
+      amountOff: (json['amount_off'] as dynamic),
+      percentOff: (json['percent_off'] as dynamic),
     );
   }
 
