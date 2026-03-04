@@ -13,6 +13,7 @@ import '../../features/profile_address/presentation/pages/view.dart';
 import '../../features/profile_address/presentation/pages/add_pick_location_view.dart';
 import '../../features/shipping_information/presentation/pages/view.dart';
 import '../../features/splash/presentation/pages/view.dart';
+import '../../features/auth/login_rules/presentation/screens/login_screen.dart';
 import '../../features/wishlist/presentation/pages/view.dart';
 import 'routes.dart';
 
@@ -33,6 +34,10 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: NamedRoutes.i.login,
       builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      path: NamedRoutes.i.loginRules,
+      builder: (context, state) => const LoginRulesScreen(),
     ),
     GoRoute(
       path: NamedRoutes.i.productList,

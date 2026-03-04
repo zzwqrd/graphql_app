@@ -3,6 +3,7 @@ class NamedRoutes {
   NamedRoutes._internal();
   final splash = "/splash";
   final login = "/login";
+  final loginRules = "/login_rules";
   String get layout => "/layout";
   String get productList => "/product_list";
   String get productDetails => "/product_details";

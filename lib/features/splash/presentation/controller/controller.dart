@@ -16,7 +16,9 @@ class SplashCubit extends Cubit<SplashState> {
       await Future.delayed(const Duration(seconds: 3));
 
       final bool isLoggedIn = AuthManager.isAuthenticated;
-      final nextRoute = isLoggedIn ? NamedRoutes.i.layout : NamedRoutes.i.login;
+      final nextRoute = isLoggedIn
+          ? NamedRoutes.i.layout
+          : NamedRoutes.i.loginRules;
 
       emit(SplashState.navigationReady(nextRoute: nextRoute));
     } catch (e) {
