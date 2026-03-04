@@ -194,15 +194,15 @@ class Price {
 }
 
 class Money {
-  final dynamic value;
+  final double value;
   final String currency;
 
   Money({required this.value, required this.currency});
 
   factory Money.fromJson(Map<String, dynamic> json) {
     return Money(
-      value: (json['value'] as dynamic),
-      currency: json['currency'] ?? 'SAR',
+      value: _tryParseDouble(json['value']),
+      currency: json['currency']?.toString() ?? 'SAR',
     );
   }
 
@@ -210,21 +210,26 @@ class Money {
     return {'value': value, 'currency': currency};
   }
 
-  String get formatted {
-    return '${value.toStringAsFixed(2)}';
-  }
+  String get formatted => value.toStringAsFixed(2);
+}
+
+double _tryParseDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is num) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? 0.0;
+  return 0.0;
 }
 
 class Discount {
-  final dynamic amountOff;
-  final dynamic percentOff;
+  final double amountOff;
+  final double percentOff;
 
   Discount({required this.amountOff, required this.percentOff});
 
   factory Discount.fromJson(Map<String, dynamic> json) {
     return Discount(
-      amountOff: (json['amount_off'] as dynamic),
-      percentOff: (json['percent_off'] as dynamic),
+      amountOff: _tryParseDouble(json['amount_off']),
+      percentOff: _tryParseDouble(json['percent_off']),
     );
   }
 
@@ -232,9 +237,7 @@ class Discount {
     return {'amount_off': amountOff, 'percent_off': percentOff};
   }
 
-  bool get hasDiscount {
-    return percentOff > 0 || amountOff > 0;
-  }
+  bool get hasDiscount => percentOff > 0 || amountOff > 0;
 }
 
 class Aggregation {

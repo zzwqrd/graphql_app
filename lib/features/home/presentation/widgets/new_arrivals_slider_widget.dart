@@ -67,14 +67,45 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
             // Title
             if (data.displayTitle == 1)
               TitleWidget(
-                text: data.title ?? data.sliderNameArabic ?? "جديدنا",
+                text: data.title ?? data.sliderName ?? "جديدنا",
               ).px4.pt6,
 
             SizedBox(height: 12.h),
-
+            //  ProductWidget(
+            //                                               product: product,
+            //                                               onCardTap: () {
+            //                                                 push(
+            //                                                   NamedRoutes.i.productDetails,
+            //                                                   arguments: {
+            //                                                     'sku': product.sku,
+            //                                                     'name': product.name,
+            //                                                   },
+            //                                                 );
+            //                                               },
+            //                                             );
             // Products Carousel
             CarouselSlider.builder(
               itemCount: data.items.length,
+              options: CarouselOptions(
+                height: 280.h,
+                viewportFraction: 0.45,
+
+                enableInfiniteScroll: false,
+                padEnds: false,
+                enlargeCenterPage: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+              // SliverGridDelegateWithFixedCrossAxisCount(
+              //   crossAxisCount:
+              //       context.gridColumnCount,
+              //   childAspectRatio: 0.62,
+              //   crossAxisSpacing: 10.w,
+              //   mainAxisSpacing: 16.h,
+              // ),
               itemBuilder: (context, index, _) {
                 final item = data.items[index];
                 return EnhancedProductCard(
@@ -87,18 +118,18 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                   },
                 );
               },
-              options: CarouselOptions(
-                height: 280.h,
-                viewportFraction: 0.45,
-                enableInfiniteScroll: false,
-                padEnds: false,
-                enlargeCenterPage: false,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
+              // options: CarouselOptions(
+              //   height: 280.h,
+              //   viewportFraction: 0.45,
+              //   enableInfiniteScroll: false,
+              //   padEnds: false,
+              //   enlargeCenterPage: false,
+              //   onPageChanged: (index, reason) {
+              //     setState(() {
+              //       _currentIndex = index;
+              //     });
+              //   },
+              // ),
             ).px4,
 
             SizedBox(height: 16.h),
