@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/routes/app_routes_fun.dart';
-import '../../../../core/utils/extensions_app/extensions_init.dart'
-    show AlignmentExtensions;
 import '../../../../di/service_locator.dart';
 import '../../../../gen/assets.gen.dart';
 import '../controller/controller.dart';
@@ -33,10 +31,12 @@ class _SplashViewState extends State<SplashView> {
           current.status == SplashStatus.navigationReady,
       listener: (context, state) {
         if (state.status == SplashStatus.navigationReady) {
-          pushAndRemoveUntil(state.nextRoute!);
+          // pushAndRemoveUntil(state.nextRoute!);
         }
       },
-      child: MyAssets.icons.splash.image().center,
+      child: SizedBox.expand(
+        child: MyAssets.icons.splash.image(fit: BoxFit.cover),
+      ),
     );
   }
 }

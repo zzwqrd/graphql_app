@@ -149,7 +149,7 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                       final slug = data.discoverAll!.toLowerCase();
 
                       if (categories.isEmpty) {
-                        FlashHelper.failToast(
+                        FlashHelper.warningToast(
                           trValue(
                             ar: "لا يوجد أقسام لعرضها",
                             en: "No categories available",
@@ -158,7 +158,6 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                         return;
                       }
 
-                      // البحث عن فئة تطابق الكلمة المفتاحية "perfumes" أو slug المبعوث
                       final category = categories.firstWhere(
                         (c) =>
                             c.urlPath.toLowerCase().contains(slug) ||

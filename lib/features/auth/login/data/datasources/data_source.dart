@@ -11,15 +11,14 @@ abstract class LoginDataSource {
   });
 }
 
-class LoginDataSourceImpl implements LoginDataSource {
-  final ApiClient _apiClient = ApiClient();
+class LoginDataSourceImpl with ApiClient implements LoginDataSource {
   final GraphQLQueries queries = GraphQLQueries();
 
   @override
   Future<Either<HelperResponse, LoginResponse>> login(
     LoginModel loginModel,
   ) async {
-    return await _apiClient.graphQLMutation(
+    return await graphQLMutation(
       queries.loginMutation,
       variables: {'email': loginModel.email, 'password': loginModel.password},
       requireAuth: false,
@@ -32,7 +31,7 @@ class LoginDataSourceImpl implements LoginDataSource {
   Future<Either<HelperResponse, Customer>> getCustomerData({
     required String token,
   }) async {
-    return await _apiClient.graphQLQuery<Customer>(
+    return await graphQLQuery<Customer>(
       queries.customerQuery,
       headers: {'Authorization': 'Bearer $token'},
       requireAuth: true,
