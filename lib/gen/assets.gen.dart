@@ -361,6 +361,11 @@ class $AssetsIconsGen {
         'assets/icons/loading_d.json',
       );
 
+  /// File path: assets/icons/logo.png
+  AssetGenImage get logo => const AssetGenImage(
+    'assets/icons/logo.png',
+  );
+
   /// File path: assets/icons/marked.svg
   SvgGenImage get marked => const SvgGenImage(
     'assets/icons/marked.svg',
@@ -532,6 +537,11 @@ class $AssetsIconsGen {
     'assets/icons/shield_done.svg',
   );
 
+  /// File path: assets/icons/splash.png
+  AssetGenImage get splash => const AssetGenImage(
+    'assets/icons/splash.png',
+  );
+
   /// File path: assets/icons/star.svg
   SvgGenImage get star =>
       const SvgGenImage('assets/icons/star.svg');
@@ -692,6 +702,7 @@ class $AssetsIconsGen {
     languageSelect,
     loading,
     loadingD,
+    logo,
     marked,
     markerUser,
     mastercard,
@@ -724,6 +735,7 @@ class $AssetsIconsGen {
     remove,
     search,
     shieldDone,
+    splash,
     star,
     starRating,
     stripe,

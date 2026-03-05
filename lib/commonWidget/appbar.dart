@@ -33,7 +33,7 @@ class AppBarWidget extends StatelessWidget {
       automaticallyImplyLeading: false,
       title: Row(
         children: [
-          CustomImage(MyAssets.icons.iconGreenUp.path, width: 73.w),
+          CustomImage(MyAssets.icons.logo.path, width: 73.w),
           Text(
             title ?? "",
             style: TextStyle(

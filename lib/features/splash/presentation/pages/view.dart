@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/routes/app_routes_fun.dart';
-import '../../../../core/utils/extensions_app/color/color_extensions.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart'
     show AlignmentExtensions;
 import '../../../../di/service_locator.dart';
@@ -37,10 +36,7 @@ class _SplashViewState extends State<SplashView> {
           pushAndRemoveUntil(state.nextRoute!);
         }
       },
-      child: Scaffold(
-        backgroundColor: context.primaryColor,
-        body: MyAssets.icons.iconAppG.image().center,
-      ),
+      child: MyAssets.icons.splash.image().center,
     );
   }
 }

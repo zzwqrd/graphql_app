@@ -13,6 +13,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/extensions_app/extensions_init.dart';
 import '../controller/controller.dart';
 import '../controller/state.dart';
+import '../../../../core/utils/flash_helper.dart';
 import 'enhanced_product_card.dart';
 
 class NewArrivalsSliderWidget extends StatefulWidget {
@@ -102,37 +103,21 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                   });
                 },
               ),
-              // SliverGridDelegateWithFixedCrossAxisCount(
-              //   crossAxisCount:
-              //       context.gridColumnCount,
-              //   childAspectRatio: 0.62,
-              //   crossAxisSpacing: 10.w,
-              //   mainAxisSpacing: 16.h,
-              // ),
               itemBuilder: (context, index, _) {
                 final item = data.items[index];
-                return EnhancedProductCard(
-                  item: item,
-                  onCardTap: () {
-                    push(
-                      NamedRoutes.i.productDetails,
-                      arguments: {'sku': item.sku, 'name': item.name},
-                    );
-                  },
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: EnhancedProductCard(
+                    item: item,
+                    onCardTap: () {
+                      push(
+                        NamedRoutes.i.productDetails,
+                        arguments: {'sku': item.sku, 'name': item.name},
+                      );
+                    },
+                  ),
                 );
               },
-              // options: CarouselOptions(
-              //   height: 280.h,
-              //   viewportFraction: 0.45,
-              //   enableInfiniteScroll: false,
-              //   padEnds: false,
-              //   enlargeCenterPage: false,
-              //   onPageChanged: (index, reason) {
-              //     setState(() {
-              //       _currentIndex = index;
-              //     });
-              //   },
-              // ),
             ).px4,
 
             SizedBox(height: 16.h),
@@ -159,7 +144,36 @@ class _NewArrivalsSliderWidgetState extends State<NewArrivalsSliderWidget> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final categories = state.homeResponse?.categories ?? [];
+                      final slug = data.discoverAll!.toLowerCase();
+
+                      if (categories.isEmpty) {
+                        FlashHelper.failToast(
+                          trValue(
+                            ar: "لا يوجد أقسام لعرضها",
+                            en: "No categories available",
+                          ),
+                        );
+                        return;
+                      }
+
+                      // البحث عن فئة تطابق الكلمة المفتاحية "perfumes" أو slug المبعوث
+                      final category = categories.firstWhere(
+                        (c) =>
+                            c.urlPath.toLowerCase().contains(slug) ||
+                            c.name.toLowerCase().contains(slug),
+                        orElse: () => categories.first,
+                      );
+
+                      push(
+                        NamedRoutes.i.productList,
+                        arguments: {
+                          'categoryUid': category.id,
+                          'categoryName': category.name,
+                        },
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: context.primaryColor, width: 1.5),
                       shape: RoundedRectangleBorder(
