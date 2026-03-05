@@ -7,35 +7,21 @@ import '../../../../gen/assets.gen.dart';
 import '../controller/controller.dart';
 import '../controller/state.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   @override
-  State<SplashView> createState() => _SplashViewState();
-}
-
-class _SplashViewState extends State<SplashView> {
-  late final SplashCubit _cubit;
-  @override
-  void initState() {
-    super.initState();
-    _cubit = sl<SplashCubit>();
-    _cubit.start();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<SplashCubit, SplashState>(
-      bloc: _cubit,
-      listenWhen: (previous, current) =>
-          current.status == SplashStatus.navigationReady,
-      listener: (context, state) {
-        if (state.status == SplashStatus.navigationReady) {
-          // pushAndRemoveUntil(state.nextRoute!);
-        }
-      },
-      child: SizedBox.expand(
-        child: MyAssets.icons.splash.image(fit: BoxFit.cover),
+    return BlocProvider(
+      create: (_) => sl<SplashCubit>()..start(),
+      child: BlocListener<SplashCubit, SplashState>(
+        listenWhen: (_, current) => current.status.isNavigationReady,
+        listener: (context, state) {
+          pushAndRemoveUntil(state.nextRoute!);
+        },
+        child: SizedBox.expand(
+          child: MyAssets.icons.splash.image(fit: BoxFit.cover),
+        ),
       ),
     );
   }
